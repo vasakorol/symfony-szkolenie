@@ -41,7 +41,7 @@ class Task
      */
     public function setName($name)
     {
-        $prior = substr_count($name, '!', 0, 3);
+        $prior = substr_count($name, '!', 0, strlen($name)>3?3:strlen($name));
         $this->setPriority($prior);
         
         $this->name = substr($name, $prior);
