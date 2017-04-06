@@ -3,7 +3,6 @@
 namespace Tests\AppBundle\Controller;
 
 use AppBundle\DataFixtures\ORM\LoadUserData;
-use AppBundle\Entity\User;
 use Liip\FunctionalTestBundle\Test\WebTestCase;
 
 class DefaultControllerTest extends WebTestCase
@@ -15,7 +14,7 @@ class DefaultControllerTest extends WebTestCase
         $client = $this->makeClient();
         $crawler = $client->request('GET', '/');
 
-        $this->assertStatusCode(302, $client);
+        $this->assertStatusCode(200, $client);
     }
 
     public function testIndexLogged()
@@ -23,33 +22,9 @@ class DefaultControllerTest extends WebTestCase
         $fixtures = $this->loadFixtures([LoadUserData::class])->getReferenceRepository();
         $user = $fixtures->getReference('user');
 
-        $client = $this->makeClient(['username' => $user->getUsername(), 'password' => 'tester']);
-        $crawler = $client->request('GET', '/');
+        $client = $this->makeClient(['username' => $user->getUsername(), 'password' => 'password']);
+        $crawler = $client->request('GET', '/task');
 
         $this->assertStatusCode(200, $client);
-    }
-
-
-    /**
-     * $group functional
-     */
-    public function testIndex() {
-        $fixtures=$this->loadFixtures([
-            LoadUserData::class
-        ])->getReferanceRepository();
-
-        $user = $fixtures->getReferance('user');
-
-        /**
-         * @var $user User
-         */
-        $client = $this->makeClient([
-            'username'=>$user->getUsername(),
-            'password'=>'password',
-        ]);
-
-        $crawler = $client->request('GET', '/');
-        $this->assertStatusCode(200, $client);
-        //$this->assertContains('No tasks', $crawler->filter());
     }
 }
