@@ -1,0 +1,19 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}AppBundle:Task:index{% endblock %}
+
+{% block body %}
+<h1>Welcome to the Task:index page</h1>
+    <div>
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div>
+        <ol>
+            {% for item in list %}
+                <li>item.name</li>
+            {% endfor %}
+        </ol>
+    </div>
+{% endblock %}
