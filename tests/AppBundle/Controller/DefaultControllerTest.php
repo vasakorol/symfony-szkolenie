@@ -23,7 +23,7 @@ class DefaultControllerTest extends WebTestCase
         $fixtures = $this->loadFixtures([LoadUserData::class])->getReferenceRepository();
         $user = $fixtures->getReference('user');
 
-        $client = $this->makeClient(['username' => $user->getUsername(), 'password' => 'tester']);
+        $client = $this->makeClient(['username' => $user->getUsername(), 'password' => 'password']);
         $crawler = $client->request('GET', '/');
 
         $this->assertStatusCode(200, $client);

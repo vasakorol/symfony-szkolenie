@@ -23,7 +23,7 @@ class TaskController extends Controller
             'method' => 'post',
         ));
         return $this->render('AppBundle:Task:index.html.twig', array(
-            'list' => $em->getRepository(Task::class)->findAll(),
+            'list' => $em->getRepository(Task::class)->findBy([], ['priority'=>'desc']),
             'form' => $form->createView()
         ));
     }

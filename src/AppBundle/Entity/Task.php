@@ -41,7 +41,10 @@ class Task
      */
     public function setName($name)
     {
-        $this->name = $name;
+        $prior = substr_count($name, '!', 0, 3);
+        $this->setPriority($prior);
+        
+        $this->name = substr($name, $prior);
     }
 
     /**
@@ -81,5 +84,35 @@ class Task
      * @ORM\Column(name="user", type="integer", nullable=true)
      */
     private $user;
-}
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="priority", type="integer", nullable=true, options={"default" : 0})
+     */
+    private $priority;
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     *
+     * @return Task
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+}
