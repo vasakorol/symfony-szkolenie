@@ -21,7 +21,7 @@ class LoadUserData extends AbstractFixture implements ContainerAwareInterface
         $user->setPlainPassword('password');
         $user->setEnabled(true);
         $user->setRoles(['ROLE_USER']);
-        $user->setReference('user', $user);
+        $this->setReference('user', $user);
 
         $userManager->updateUser($user, true);
     }
