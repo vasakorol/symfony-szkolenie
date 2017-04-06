@@ -41,6 +41,7 @@ class TaskController extends Controller
         if ($form->isValid()) {
 
             $task = $form->getData();
+            $task->setUser(($this->getUser() ? $this->getUser() : -1));
             $em->persist($task);
             $em->flush();
             $this->addFlash('success', 'Added');
