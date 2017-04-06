@@ -16,7 +16,6 @@ class TaskType extends AbstractType
     {
         $builder->add('name');
         $builder->add('save', SubmitType::class, array('label' => 'Create'));
-            //->add('description')->add('status')->add('created');
     }
     
     /**

@@ -12,12 +12,16 @@ use Symfony\Component\HttpFoundation\Request;
 class TaskController extends Controller
 {
     /**
-     * @Route("/task")
+     * @Route("/task", name="task")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $form = $this->createForm(TaskType::class);
+        $task = new Task();
+        $form = $this->createForm(TaskType::class, $task, array(
+            'action' => '/task/add',
+            'method' => 'post',
+        ));
         return $this->render('AppBundle:Task:index.html.twig', array(
             'list' => $em->getRepository(Task::class)->findAll(),
             'form' => $form->createView()
@@ -37,13 +41,14 @@ class TaskController extends Controller
         if ($form->isValid()) {
 
             $task = $form->getData();
+            $task->setUser(($this->getUser() ? $this->getUser() : -1));
             $em->persist($task);
             $em->flush();
             $this->addFlash('success', 'Added');
         }
         $this->addFlash('warning', 'Somethign wrong');
 
-        return $this->redirectToRoute('/task');
+        return $this->redirectToRoute('task');
     }
 
 }
